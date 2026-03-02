@@ -52,7 +52,7 @@ vehicle-tracking/
 ├── yolo11n.pt             # Weights ของโมเดล YOLO (ดาวน์โหลดอัตโนมัติ)
 └── README.md              # เอกสารอธิบายการใช้งานโปรเจกต์
 
----
+```
 
 ## 🚀 วิธีติดตั้งและใช้งาน (Getting Started)
 
