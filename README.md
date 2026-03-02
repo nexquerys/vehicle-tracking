@@ -66,7 +66,6 @@ pip install ultralytics opencv-python
 
 ## 🙏 เครดิต (Credits)
 โปรเจกต์นี้ได้รับการพัฒนาต่อยอดและได้รับแรงบันดาลใจจากทรัพยากรดังต่อไปนี้:
-
-Source Inspiration: Python Computer Vision - YOLO Tracking
-Object Detection: Ultralytics YOLO
-Image Processing: OpenCV Library
+* **Source Inspiration:** [Python Computer Vision - YOLO Tracking](https://github.com/louisa9555/PythonComputerVision)
+* **Object Detection:** [Ultralytics YOLO](https://github.com/ultralytics/ultralytics)
+* **Image Processing:** [OpenCV Library](https://opencv.org/)
