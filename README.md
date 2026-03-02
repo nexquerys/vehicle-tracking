@@ -61,3 +61,12 @@ vehicle-tracking/
 * **Library:** ติดตั้งผ่าน Terminal/Command Prompt:
 ```bash
 pip install ultralytics opencv-python
+
+```
+
+## 🙏 เครดิต (Credits)
+โปรเจกต์นี้ได้รับการพัฒนาต่อยอดและได้รับแรงบันดาลใจจากทรัพยากรดังต่อไปนี้:
+
+Source Inspiration: Python Computer Vision - YOLO Tracking
+Object Detection: Ultralytics YOLO
+Image Processing: OpenCV Library
