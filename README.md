@@ -1,94 +1,30 @@
-# vehicle-tracking
+# 🚗 Vehicle Tracking & Lane Counter
+> **Real-Time Traffic Analysis using YOLO + OpenCV**
 
-🚗 ระบบติดตามและนับจำนวนรถแยกเลน (YOLO + OpenCV)
+![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
+![YOLO](https://img.shields.io/badge/YOLO-Ultralytics-orange?style=for-the-badge)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer_Vision-green?style=for-the-badge&logo=opencv)
+![CUDA](https://img.shields.io/badge/CUDA-Enabled-76B900?style=for-the-badge&logo=nvidia)
 
-ระบบตรวจจับ ติดตาม และนับจำนวนรถแบบ Real-Time โดยใช้ Ultralytics YOLO ร่วมกับ OpenCV
-รองรับการแบ่งเลนแบบเส้นเอียง (Sloped Lane Divider) และนับจำนวนรถแยกฝั่งซ้าย–ขวาอย่างแม่นยำด้วย Object Tracking
+ระบบตรวจจับ ติดตาม และนับจำนวนรถแบบ Real-Time ที่ถูกออกแบบมาเพื่อจัดการกับความท้าทายของ **"เส้นแบ่งเลนแนวเอียง (Sloped Lane Divider)"** ช่วยให้การนับจำนวนรถแยกฝั่งซ้าย-ขวาแม่นยำยิ่งขึ้นตามมุมมองของกล้องวงจรปิดจริง
 
-🔥 ความสามารถของระบบ
+---
 
-✅ ตรวจจับรถแบบ Real-Time ด้วย YOLO
-✅ ติดตามวัตถุด้วย ID เฉพาะ (Persistent Tracking)
-✅ แบ่งเลนด้วยเส้นเอียง (คำนวณจากการคลิก 2 จุด)
-✅ นับจำนวนรถแยกตามเลนซ้าย–ขวา
-✅ แยกนับตามประเภทของรถ (car, truck ฯลฯ)
-✅ รองรับการทำงานบน GPU (CUDA)
-✅ แสดง Bounding Box, ID, จุดกึ่งกลาง และตัวนับบนหน้าจอ
+## 🔥 Key Features
 
-🧠 หลักการทำงานของระบบ
+* **Smart Tracking:** ใช้ Persistent Tracking (ByteTrack/BoT-SORT) ทำให้ ID ของรถไม่กระโดดแม้มีการบดบัง
+* **Dynamic Lane Divider:** ระบบคำนวณสมการเส้นตรงจากการคลิก 2 จุด รองรับถนนทุกมุมกล้อง
+* **Multi-Class Detection:** แยกนับประเภทรถได้ชัดเจน (Car, Truck, Bus, Motorcycle)
+* **High Performance:** รองรับการประมวลผลผ่าน GPU (CUDA) เพื่อความเร็วระดับ Real-Time
+* **Visual Analytics:** แสดง Bounding Box, Tracking ID, Center Point และ Summary Dashboard บนหน้าจอ
 
-1️⃣ การตรวจจับและติดตามวัตถุ
-ใช้ Ultralytics YOLO พร้อมระบบ Tracking ภายในตัว:
-results = model.track(frame, persist=True, classes=[2], device=0)
-persist=True → ทำให้ ID ของรถไม่เปลี่ยนทุกเฟรม
-classes=[2] → ตรวจจับเฉพาะรถยนต์ (สามารถเพิ่ม truck, bus ได้)
-device=0 → ใช้ GPU
+---
 
-2️⃣ การสร้างเส้นแบ่งเลนแบบเอียง
-ผู้ใช้สามารถ:
- - คลิกเมาส์ 2 จุดบนหน้าจอ
- - ระบบจะคำนวณสมการเส้นตรง: 
-   - x = slope * y + intercept
+## 🧠 System Architecture
 
-ทำให้สามารถปรับเส้นแบ่งเลนให้ตรงกับมุมมองถนนจริงได้
+ระบบทำงานโดยอาศัย 3 กลไกหลัก:
 
-3️⃣ ระบบนับรถ
-ใช้ตำแหน่ง “จุดกึ่งกลางของกรอบ (Center Point)” ของรถ
-เงื่อนไขการนับ:
-เปรียบเทียบตำแหน่งกับเส้นแบ่งเลน (เอียง)
-เปรียบเทียบกับเส้นแนวนอนสำหรับนับรถ
-ใช้ track_id เพื่อป้องกันการนับซ้ำ
-
-🖥 ตัวอย่าง Logic การนับ
-เงื่อนไข	การทำงาน
-รถอยู่เหนือเส้นนับ และอยู่ฝั่งขวาของเส้นแบ่ง	นับเป็นเลนซ้าย
-รถอยู่ใต้เส้นนับ และอยู่ฝั่งซ้ายของเส้นแบ่ง	นับเป็นเลนขวา
-ID เคยนับแล้ว	ไม่นับซ้ำ
-📦 ความต้องการของระบบ
- - Python 3.9+
- - แนะนำให้มี GPU (CUDA)
-
-ติดตั้งไลบรารี
-pip install ultralytics opencv-python
-📁 โครงสร้างโปรเจกต์
-vehicle-tracking/
-│
-├── main.py
-├── highway-traffic.mp4
-├── yolo26n.pt
-└── README.md
-
-▶️ วิธีใช้งาน
-ใส่ไฟล์วิดีโอไว้ในโฟลเดอร์โปรเจกต์
-เตรียมไฟล์โมเดล YOLO (yolo26n.pt) หรือโมเดลอื่นที่ต้องการ
-รันโปรแกรม (python main.py)
-คลิกเมาส์ 2 จุดบนหน้าจอเพื่อกำหนดเส้นแบ่งเลน
-กด Q เพื่อออกจากโปรแกรม
-
-🎯 การปรับแต่งเพิ่มเติม
-เพิ่มประเภทของรถที่ต้องการตรวจจับ
-
-แก้จาก:
- - classes=[2]
-เป็น:
- - classes=[2, 5, 7]  # car, bus, truck
-
-ปรับตำแหน่งเส้นนับรถ (line_y = int(frame.shape[0] * 0.55))
-ปรับขนาดหน้าจอแสดงผล (ratio = 0.5)
-
-⚡ คำแนะนำด้านประสิทธิภาพ
-ใช้ GPU (model.to("cuda"))
-ใช้โมเดลขนาดเล็ก เช่น nano
-Resize เฉพาะตอนแสดงผล ไม่ resize ก่อน detect
-
-🏗 เทคโนโลยีที่ใช้
-OpenCV – ประมวลผลภาพและวิดีโอ
-Ultralytics YOLO – ตรวจจับและติดตามวัตถุ
-
-🙏 เครดิต
-
-โปรเจกต์นี้พัฒนาต่อยอดและได้รับแรงบันดาลใจจาก:
- - https://github.com/louisa9555/PythonComputerVision/tree/main/YOLO-Tracking_and_CarCount
-
-📜 License
-โปรเจกต์นี้จัดทำเพื่อการศึกษาและวิจัยเท่านั้น
+### 1. Detection & Tracking
+ใช้โมเดล YOLO ล่าสุดพร้อมคำสั่ง `model.track()` เพื่อคงค่า ID ของวัตถุไว้ตลอดการเคลื่อนที่
+```python
+results = model.track(frame, persist=True, classes=[2, 5, 7], device=0)
